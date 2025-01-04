@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intro & About Me</title>
+    <style>
+        /* Global Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Intro Page Styles */
+        .intro-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #6a1b9a, #000000);
+            text-align: center;
+            color: #fff;
+        }
+        .intro-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .intro-button {
+            font-size: 20px;
+            padding: 10px 20px;
+            background: #ff4081;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-weight: bold;
+            animation: fadeIn 3s ease-in-out;
+        }
+        .intro-button:hover {
+            background: #e91e63;
+        }
+        .mute-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* About Me Styles */
+        .about-container {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #6a1b9a, #000000);
+            text-align: center;
+            color: #fff;
+        }
+        .about-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 20px;
+            border: 3px solid white;
+        }
+        .profile-name {
+            font-size: 32px;
+            color: #00FF00;
+            text-transform: uppercase;
+            margin-top: 10px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8), 0 0 20px rgba(0, 255, 0, 0.8), 0 0 30px rgba(0, 255, 0, 0.8);
+            animation: neonGlow 1.5s ease-in-out infinite alternate;
+        }
+        .visitor-counter {
+            font-size: 20px;
+            margin-top: 10px;
+            color: #fff;
+            text-shadow: 0 0 5px #ffffff;
+        }
+        .social-link {
+            font-size: 20px;
+            padding: 10px 20px;
+            background: #42a5f5;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 10px;
+            animation: fadeIn 3s ease-in-out;
+        }
+        .social-link:hover {
+            background: #1e88e5;
+        }
+        .social-container {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        /* Snow effect styles */
+        .snow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Neon Glow Effect */
+        @keyframes neonGlow {
+            0% { text-shadow: 0 0 10px rgba(0, 255, 0, 0.8), 0 0 20px rgba(0, 255, 0, 0.8), 0 0 30px rgba(0, 255, 0, 0.8); }
+            100% { text-shadow: 0 0 20px rgba(0, 255, 0, 1), 0 0 40px rgba(0, 255, 0, 1), 0 0 60px rgba(0, 255, 0, 1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Intro Page -->
+    <div class="intro-container">
+        <h1 class="intro-title">Click to Enter</h1>
+        <button class="intro-button" onclick="enterSite()">Enter</button>
+        <button class="mute-btn" onclick="toggleMute()">🔊 Mute</button>
+    </div>
+
+    <!-- About Me Page -->
+    <div class="about-container" id="about-me">
+        <h1 class="about-title">Hi, this is my social media!</h1>
+        <img src="light yagami.jpg" alt="Profile Picture" class="profile-img">
+        <div class="profile-name">M4yss</div> <!-- Your name here -->
+        <div class="visitor-counter" id="visitor-counter">Visitors: 0</div>
+        <div class="social-container">
+            <a href="https://www.roblox.com/users/1562517946/profile" class="social-link" target="_blank">Roblox</a>
+            <a href="https://www.youtube.com/@MayssEZ" class="social-link" target="_blank">Youtube</a>
+            <a href="https://steamcommunity.com/id/M4yss/" class="social-link" target="_blank">Steam</a>
+        </div>
+    </div>
+
+    <audio id="background-music" loop autoplay>
+        <source src="love sorrow.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Snow Effect -->
+    <canvas class="snow" id="snowCanvas"></canvas>
+
+    <script>
+        const music = document.getElementById('background-music');
+        let isMuted = false;
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            music.muted = isMuted;
+            document.querySelector('.mute-btn').textContent = isMuted ? '🔇 Unmute' : '🔊 Mute';
+        }
+
+        function enterSite() {
+            document.querySelector('.intro-container').style.display = 'none';
+            document.getElementById('about-me').style.display = 'flex';
+
+            // Update visitor counter
+            let visits = localStorage.getItem('visitCount') || 0;
+            visits++;
+            localStorage.setItem('visitCount', visits);
+            document.getElementById('visitor-counter').textContent = `Visitors: ${visits}`;
+        }
+
+        // Snow effect that follows the cursor
+        const canvas = document.getElementById('snowCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        const snowflakes = [];
+        for (let i = 0; i < 100; i++) {
+            snowflakes.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 3 + 1,
+                speed: Math.random() * 2 + 1,
+                direction: Math.random() * 2 * Math.PI // Random direction
+            });
+        }
+
+        function updateSnowflakes() {
+            ctx.clearRect(0, 0, width, height);
+            for (let flake of snowflakes) {
+                flake.x += Math.sin(flake.direction) * 0.5; // Moves snowflakes in a curved pattern
+                flake.y += flake.speed;
+
+                // Reposition snowflakes that go off the screen
+                if (flake.y > height) {
+                    flake.y = 0;
+                    flake.x = Math.random() * width;
+                }
+
+                ctx.beginPath();
+                ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'white';
+                ctx.fill();
+            }
+            requestAnimationFrame(updateSnowflakes);
+        }
+        updateSnowflakes();
+
+        // Follow cursor
+        let cursorX = 0;
+        let cursorY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            cursorX = e.clientX;
+            cursorY = e.clientY;
+        });
+
+        setInterval(() => {
+            for (let flake of snowflakes) {
+                // Adjust snowflakes to move towards the cursor position
+                const angle = Math.atan2(cursorY - flake.y, cursorX - flake.x);
+                flake.direction = angle; // Change the snowflake's direction
+            }
+        }, 50);
+    </script>
+</body>
+</html>
